@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "exceed",
+    "slug": "exceed",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./app/assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./app/assets/background.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#373598"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.exceed"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/assets/icon.png",
+        "backgroundColor": "#dfdbdb"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.exceed"
+    },
+    "web": {
+      "favicon": "./app/assets/favicon.png"
+    }
+  }
+}
