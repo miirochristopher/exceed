@@ -5,13 +5,14 @@ import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
 
-function ListingDetailsScreen(props) {
+function ListingDetailsScreen({ route }) {
+  const listing = route.params;
   return (
     <View>
-      <Image style={styles.image} source={require("../assets/sale.jpg")} />
+      <Image style={styles.image} source={listing.image} />
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>Red sale for sale</Text>
-        <Text style={styles.price}>$100</Text>
+        <Text style={styles.title}>{listing.name}</Text>
+        <Text style={styles.date}>{listing.date}</Text>
         <View style={styles.userContainer}>
           <ListItem
             title="Default User"
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 300,
   },
-  price: {
+  date: {
     color: colors.secondary,
     fontWeight: "bold",
     fontSize: 20,
