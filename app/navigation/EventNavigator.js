@@ -7,7 +7,7 @@ import ListingDetailsScreen from "../screens/ListingDetailsScreen";
 const Stack = createStackNavigator();
 
 const EventNavigator = () => (
-  <Stack.Navigator mode={"modal"}>
+  <Stack.Navigator mode={"modal"} screenOptions={{ headerShown: false }}>
     <Stack.Screen
       name="Listings"
       component={ListingsScreen}
