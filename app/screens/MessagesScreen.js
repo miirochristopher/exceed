@@ -20,7 +20,7 @@ const initialMessages = [
     title: "Other User",
     description:
       "I'm interested in this item. When will you be able to post it?",
-    image: require("../assets/femmale.png"),
+    image: require("../assets/female.png"),
   },
 ];
 
@@ -57,7 +57,7 @@ function MessagesScreen(props) {
               id: 2,
               title: "T2",
               description: "D2",
-              image: require("../assets/male.jpg"),
+              image: require("../assets/male.png"),
             },
           ]);
         }}
