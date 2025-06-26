@@ -19,7 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/icon.png",
-        "backgroundColor": "#dfdbdb"
+        "backgroundColor": "#E2E1E1"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.anonymous.exceed"
