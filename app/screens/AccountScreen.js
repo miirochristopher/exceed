@@ -8,14 +8,14 @@ import Screen from "../components/Screen";
 
 const menuItems = [
   {
-    title: "My Listings",
+    title: "Enrollments",
     icon: {
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
     },
   },
   {
-    title: "My Messages",
+    title: "Messages",
     icon: {
       name: "email",
       backgroundColor: colors.secondary,
@@ -52,8 +52,8 @@ function AccountScreen(props) {
         />
       </View>
       <ListItem
-        title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+        title="Logout"
+        IconComponent={<Icon name="logout" backgroundColor="#ffa500" />}
       />
     </Screen>
   );
