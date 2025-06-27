@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
   <Tab.Navigator>
     <Tab.Screen
-      name="Events"
+      name="Lists"
       component={EventNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (
@@ -37,7 +37,7 @@ const AppNavigator = () => (
       })}
     />
     <Tab.Screen
-      name="Account"
+      name="Profile"
       component={AccountNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (

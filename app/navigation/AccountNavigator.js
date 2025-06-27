@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const AccountNavigator = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name="Profile"
+      name="Account"
       component={AccountScreen}
       options={{ headerShown: false }}
     />
