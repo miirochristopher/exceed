@@ -8,34 +8,36 @@ import colors from "../config/colors";
 import Screen from "../components/Screen";
 
 function ListingsScreen({ navigation }) {
-  const [clubEvents, setClubEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    loadClubEvents();
+    loadEvents();
   }, []);
 
-  const loadClubEvents = async () => {
-    const response = await clubEventsAPI.getClubEvents();
+  const loadEvents = async () => {
+    const response = await clubEventsAPI.fetchClubEvents();
     console.log(JSON.stringify(response.data));
-    setClubEvents(response.data.data);
+    setEvents(response.data);
   };
 
   return (
     <Screen>
-      <FlatList
-        data={clubEvents}
-        keyExtractor={(clubEvent) => clubEvent.documentId}
-        renderItem={({ item }) => (
-          <View style={styles.screen}>
-            <Card
-              title={item.name}
-              subTitle={item.date}
-              image={item.venue}
-              onPress={() => navigation.push("Details", item)}
-            />
-          </View>
-        )}
-      />
+      {events && (
+        <FlatList
+          data={events}
+          keyExtractor={(event) => event.documentId}
+          renderItem={({ item }) => (
+            <View style={styles.screen}>
+              <Card
+                title={item.name}
+                subTitle={item.date}
+                imageUrl={item.image.url}
+                onPress={() => navigation.push("Details", item)}
+              />
+            </View>
+          )}
+        />
+      )}
     </Screen>
   );
 }
