@@ -1,49 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import dayjs from "dayjs";
 
+import clubEventsAPI from "../rest/events";
+
+import Button from "../components/Button";
 import Card from "../components/Card";
-import colors from "../config/colors";
 import Screen from "../components/Screen";
-
-const events = [
-  {
-    uuid: "6c8c8380-fa6d-419b-8daf-c7c7e55eeb5e",
-    name: "Living a healthy life",
-    date: "16-05-2025",
-    image: require("../assets/sale.jpg"),
-  },
-  {
-    uuid: "c544421b-73ed-49a8-8e14-e06adcbedac4",
-    name: "Health is wealth",
-    date: "18-05-2025",
-    image: require("../assets/sale.jpg"),
-  },
-  {
-    uuid: "f8e96f1a-c327-4633-a37e-4ccfcf40ab1d",
-    name: "Journey of faith",
-    date: "17-05-2025",
-    image: require("../assets/sale.jpg"),
-  },
-  {
-    uuid: "e1bf827a-d994-45fd-891e-7061139e527a",
-    name: "A walk to remeber",
-    date: "17-05-2025",
-    image: require("../assets/sale.jpg"),
-  },
-];
+import Text from "../components/Text";
+import colors from "../config/colors";
 
 function ListingsScreen({ navigation }) {
+  const [events, setEvents] = useState([]);
+  const [errors, setErrors] = useState(false);
+
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  const loadEvents = async () => {
+    const response = await clubEventsAPI.getClubEvents();
+    console.log(JSON.stringify(response.data));
+    if (!response.ok) return setErrors(true);
+
+    setErrors(false);
+    setEvents(response.data.data);
+  };
+
   return (
-    <Screen style={styles.screen}>
+    <Screen>
+      {errors && (
+        <>
+          <View style={styles.error}>
+            <Text style={styles.text}>Couldn't retrieve events!</Text>
+            <Button title={"Retry"} onPress={loadEvents} />
+          </View>
+        </>
+      )}
+
       <FlatList
         data={events}
-        keyExtractor={(event) => event.uuid}
+        keyExtractor={(event) => event.documentId}
         renderItem={({ item }) => (
-          <View style={styles.events}>
+          <View style={styles.screen}>
             <Card
               title={item.name}
-              subTitle={item.date}
-              image={item.image}
+              subTitle={dayjs(item.date)
+                .format("YYYY-MM-DD")
+                .concat(" | TIME: ")
+                .concat(dayjs(item.date).format("HH:MM"))}
+              imageUrl={item.image.url}
               onPress={() => navigation.push("Details", item)}
             />
           </View>
@@ -54,6 +60,10 @@ function ListingsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  error: {
+    flext: 1,
+    padding: 10,
+  },
   screen: {
     flex: 1,
     padding: 10,
@@ -67,6 +77,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 20,
     fontWeight: "700",
+  },
+  text: {
+    padding: 10,
   },
 });
 

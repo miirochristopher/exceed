@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const EventNavigator = () => (
   <Stack.Navigator mode={"modal"} screenOptions={{ headerShown: false }}>
     <Stack.Screen
-      name="Listings"
+      name="Events"
       component={ListingsScreen}
       options={{ headerShown: false }}
     />
