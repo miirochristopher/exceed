@@ -14,11 +14,13 @@ const params = () =>
     },
   });
 
-const getClubEvents = () => client.get(CLUB_EVENTS_END_POINT + params());
+const getClubEvents = () => client.get(CLUB_EVENTS_END_POINT.concat(params()));
 
 const fetchClubEvents = async () => {
   try {
-    const response = await fetch(BASE_URL + CLUB_EVENTS_END_POINT + params());
+    const response = await fetch(
+      BASE_URL.concat(CLUB_EVENTS_END_POINT.concat(params()))
+    );
     const result = await response.json();
     return result;
   } catch (error) {

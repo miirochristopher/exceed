@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import dayjs from "dayjs";
 
 import clubEventsAPI from "../rest/events";
 
@@ -30,7 +31,10 @@ function ListingsScreen({ navigation }) {
             <View style={styles.screen}>
               <Card
                 title={item.name}
-                subTitle={item.date}
+                subTitle={dayjs(item.date)
+                  .format("YYYY-MM-DD")
+                  .concat(" | TIME: ")
+                  .concat(dayjs(item.date).format("HH:MM"))}
                 imageUrl={item.image.url}
                 onPress={() => navigation.push("Details", item)}
               />
