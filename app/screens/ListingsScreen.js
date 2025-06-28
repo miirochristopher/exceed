@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+
 import dayjs from "dayjs";
 
 import clubEventsAPI from "../rest/events";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import Screen from "../components/Screen";
@@ -13,14 +15,17 @@ import colors from "../config/colors";
 function ListingsScreen({ navigation }) {
   const [events, setEvents] = useState([]);
   const [errors, setErrors] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadEvents();
   }, []);
 
   const loadEvents = async () => {
+    setLoading(true);
     const response = await clubEventsAPI.getClubEvents();
-    console.log(JSON.stringify(response.data));
+    setLoading(false);
+
     if (!response.ok) return setErrors(true);
 
     setErrors(false);
@@ -37,7 +42,7 @@ function ListingsScreen({ navigation }) {
           </View>
         </>
       )}
-
+      <ActivityIndicator visible={loading} />
       <FlatList
         data={events}
         keyExtractor={(event) => event.documentId}
