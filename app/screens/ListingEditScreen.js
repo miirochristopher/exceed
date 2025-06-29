@@ -2,25 +2,29 @@ import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
+import clubEventsAPI from "../rest/events";
+
 import {
   Form,
   FormField,
   FormPicker as Picker,
   SubmitButton,
 } from "../components/forms";
+
 import PickerItemType from "../components/PickerItemType";
 import Screen from "../components/Screen";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required().min(3).label("Full name"),
+  type: Yup.string().label("Event"),
   phoneNumber: Yup.string().required().min(10).label("Phone number"),
-  gavelierClub: Yup.string().label("Gavelier club"),
+  gavelierClub: Yup.string().label("Have gavel club?"),
   attendingWithChildren: Yup.string()
     .required()
     .label("Attending with children?"),
   ChildsName: Yup.string().label("Child's or Children name(s)"),
   age: Yup.number().min(1).label("Age"),
-  activities: Yup.object().required().nullable().label("Activities"),
+  activities: Yup.object().required().label("Activities"),
   dietaryRestrictions: Yup.string().label("Any dietary restrictions?"),
   heardAboutFitness: Yup.string().label("Heard about fitness?"),
   supportEvent: Yup.string().label("Like to support the event?"),
@@ -84,13 +88,23 @@ const interests = [
   },
 ];
 
-function ListingEditScreen() {
+function ListingEditScreen({ route }) {
+  const enrollInto = route.params;
+
+  const handleSubmit = async (enrollment) => {
+    const result = await clubEventsAPI.createEnrollment(enrollment);
+    if (!result.ok) return alert("Could not save enrollment!");
+    console.log(result);
+    alert("Enrollment was successful!");
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <Screen style={styles.container}>
         <Form
           initialValues={{
             fullName: "",
+            type: "",
             phoneNumber: "",
             gavelierClub: "",
             attendingWithChildren: "",
@@ -102,13 +116,19 @@ function ListingEditScreen() {
             supportEvent: "",
             comments: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <FormField
             maxLength={255}
             name={"fullName"}
             placeholder="Full name"
+          />
+          <FormField
+            maxLength={255}
+            name={"type"}
+            value={enrollInto.name}
+            editable={null}
           />
           <FormField
             maxLength={12}
@@ -118,7 +138,7 @@ function ListingEditScreen() {
           <FormField
             maxLength={255}
             name={"gavelierClub"}
-            placeholder="Gavelier club"
+            placeholder="Have gavel club?"
           />
           <FormField
             maxLength={255}

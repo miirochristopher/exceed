@@ -1,23 +1,32 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 
+import dayjs from "dayjs";
+
 import colors from "../config/colors";
-import ListItem from "../components/lists/ListItem";
+import Button from "../components/Button";
 import Text from "../components/Text";
 
-function ListingDetailsScreen({ route }) {
-  const listing = route.params;
+function ListingDetailsScreen({ navigation, route }) {
+  const event = route.params;
   return (
     <View>
-      <Image style={styles.image} source={listing.image} />
+      <Image style={styles.image} source={{ uri: event.image.url }} />
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{listing.name}</Text>
-        <Text style={styles.date}>{listing.date}</Text>
-        <View style={styles.userContainer}>
-          <ListItem
-            title="Default User"
-            image={require("../assets/male.png")}
-            subTitle="5 Listings"
+        <Text style={styles.title}>{event.name}</Text>
+        <Text style={styles.date}>
+          DATE:{" "}
+          {dayjs(event.date)
+            .format("YYYY-MM-DD")
+            .concat(" | TIME: ")
+            .concat(dayjs(event.date).format("HH:MM"))}
+        </Text>
+        <Text style={styles.moderator}>{event.moderator}</Text>
+        <View style={styles.enrollmentContainer}>
+          <Button
+            title={"Enroll"}
+            color="secondary"
+            onPress={() => navigation.navigate("Enroll", event)}
           />
         </View>
       </View>
@@ -26,25 +35,30 @@ function ListingDetailsScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  detailsContainer: {
-    padding: 20,
-  },
-  image: {
-    width: "100%",
-    height: 300,
-  },
   date: {
     color: colors.secondary,
     fontWeight: "bold",
     fontSize: 20,
     marginVertical: 10,
   },
+  detailsContainer: {
+    padding: 10,
+  },
+  enrollmentContainer: {
+    paddingVertical: 40,
+  },
+  image: {
+    width: "100%",
+    height: 300,
+  },
+  moderator: {
+    fontSize: 20,
+    color: colors.orange,
+    fontWeight: "700",
+  },
   title: {
     fontSize: 24,
     fontWeight: "500",
-  },
-  userContainer: {
-    marginVertical: 40,
   },
 });
 

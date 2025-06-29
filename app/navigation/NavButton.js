@@ -9,7 +9,7 @@ function NavButton({ onPress }) {
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <MaterialCommunityIcons
-          name="calendar-clock"
+          name="plus-circle"
           color={colors.white}
           size={40}
         />

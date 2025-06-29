@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
   lottie: {
     flex: 1,
     width: "50%",
+    height: "50%",
     alignItems: "center",
+    justifyContent: "center",
   },
 });
 
