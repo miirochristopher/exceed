@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, TextInput } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import clubEventsAPI from "../rest/events";
@@ -13,7 +13,6 @@ import {
 
 import PickerItemType from "../components/PickerItemType";
 import Screen from "../components/Screen";
-import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required().min(3).label("Full name"),
@@ -94,13 +93,14 @@ function ListingEditScreen({ route }) {
 
   const [eventName] = useState(enrollInto.name);
 
-  const handleSubmit = async (enrollment) => {
+  const handleSubmit = async (enrollment, { resetForm }) => {
     const result = await clubEventsAPI.createEnrollment(enrollment);
     if (!result.ok) {
       console.log(result.originalError.message);
       return alert("Could not save enrollment!");
     } else {
       alert("Enrollment was successful!");
+      resetForm();
     }
   };
 
@@ -125,8 +125,7 @@ function ListingEditScreen({ route }) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <TextInput
-            style={styles.textInput}
+          <FormField
             maxLength={255}
             name={"event"}
             defaultValue={eventName}
@@ -139,7 +138,7 @@ function ListingEditScreen({ route }) {
           />
           <FormField
             keyboardType="numeric"
-            maxLength={12}
+            maxLength={10}
             name={"phoneNumber"}
             placeholder="Phone number"
           />
@@ -206,11 +205,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     paddingVertical: 15,
-  },
-  textInput: {
-    fontSize: 18,
-    padding: 15,
-    color: colors.charcoal,
   },
 });
 export default ListingEditScreen;
