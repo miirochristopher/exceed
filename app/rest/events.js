@@ -5,6 +5,8 @@ const CLUB_EVENTS_END_POINT = "/club-events";
 
 const GET_REQUEST_DELIMITER = "?";
 
+const EVENTS_REGISTRATION_ENDPOINT = "/events";
+
 const params = () =>
   QueryString.stringify({
     populate: {
@@ -20,27 +22,26 @@ const getClubEvents = () =>
   );
 
 const createEnrollment = (enrollment) => {
-  const data = new FormData();
-  data.append("fullName", enrollment.fullName);
-  data.append("type", enrollment.type);
-  data.append("phoneNumber", enrollment.phoneNumber);
-  data.append("gavelierClub", enrollment.gavelierClub);
-  data.append("attendingWithChildren", enrollment.attendingWithChildren);
-  data.append("ChildsName", enrollment.ChildsName);
-  data.append("age", enrollment.age);
-  data.append("activities", enrollment.activities.value);
-  data.append("dietaryRestrictions", enrollment.dietaryRestrictions);
-  data.append("heardAboutFitness", enrollment.heardAboutFitness);
-  data.append("supportEvent", enrollment.supportEvent);
-  data.append("comments", enrollment.comments);
+  const payload = {
+    data: {
+      fullName: enrollment.fullName,
+      phoneNumber: enrollment.phoneNumber,
+      event: enrollment.event,
+      gavelClub: enrollment.gavelClub,
+      attendingWithChildren: enrollment.attendingWithChildren,
+      childsName: enrollment.childsName,
+      age: enrollment.age,
+      activities: enrollment.activities.label,
+      dietaryRestrictions: enrollment.dietaryRestrictions,
+      heardAboutFitness: enrollment.heardAboutFitness,
+      supportEvent: enrollment.supportEvent,
+      comments: enrollment.comments,
+    },
+  };
 
-  const metadata = {};
-  data.forEach((value, key) => (metadata[key] = value));
-  const json = JSON.stringify(metadata);
+  console.log(payload);
 
-  console.log(json);
-
-  return client.post(CLUB_EVENTS_END_POINT, json);
+  return client.post(EVENTS_REGISTRATION_ENDPOINT, payload);
 };
 
 export default {

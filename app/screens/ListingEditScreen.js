@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, TextInput } from "react-native";
 import * as Yup from "yup";
 
 import clubEventsAPI from "../rest/events";
@@ -16,17 +16,17 @@ import Screen from "../components/Screen";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required().min(3).label("Full name"),
-  type: Yup.string().label("Event"),
   phoneNumber: Yup.string().required().min(10).label("Phone number"),
-  gavelierClub: Yup.string().label("Have gavel club?"),
+  event: Yup.string().label("Event"),
+  gavelClub: Yup.string().label("Have gavel club?"),
   attendingWithChildren: Yup.string()
     .required()
-    .label("Attending with children?"),
-  ChildsName: Yup.string().label("Child's or Children name(s)"),
+    .label("Will attend with children?"),
+  childsName: Yup.string().label("Child's or Children name(s)"),
   age: Yup.number().min(1).label("Age"),
-  activities: Yup.object().required().label("Activities"),
+  activities: Yup.object().required().nullable().label("Activities"),
   dietaryRestrictions: Yup.string().label("Any dietary restrictions?"),
-  heardAboutFitness: Yup.string().label("Heard about fitness?"),
+  heardAboutFitness: Yup.string().label("How you heard about fitness"),
   supportEvent: Yup.string().label("Like to support the event?"),
   comments: Yup.string().label("Comments"),
 });
@@ -91,11 +91,16 @@ const interests = [
 function ListingEditScreen({ route }) {
   const enrollInto = route.params;
 
+  const [eventName] = useState(enrollInto.name);
+
   const handleSubmit = async (enrollment) => {
     const result = await clubEventsAPI.createEnrollment(enrollment);
-    if (!result.ok) return alert("Could not save enrollment!");
-    console.log(result);
-    alert("Enrollment was successful!");
+    if (!result.ok) {
+      console.log(result.originalError.message);
+      return alert("Could not save enrollment!");
+    } else {
+      alert("Enrollment was successful!");
+    }
   };
 
   return (
@@ -104,11 +109,11 @@ function ListingEditScreen({ route }) {
         <Form
           initialValues={{
             fullName: "",
-            type: "",
+            event: enrollInto.name,
             phoneNumber: "",
             gavelierClub: "",
             attendingWithChildren: "",
-            ChildsName: "",
+            childsName: "",
             age: "",
             activities: null,
             dietaryRestrictions: "",
@@ -119,35 +124,36 @@ function ListingEditScreen({ route }) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
+          <TextInput
+            maxLength={255}
+            name={"event"}
+            defaultValue={eventName}
+            editable={false}
+          />
           <FormField
             maxLength={255}
             name={"fullName"}
             placeholder="Full name"
           />
           <FormField
-            maxLength={255}
-            name={"type"}
-            value={enrollInto.name}
-            editable={null}
-          />
-          <FormField
+            keyboardType="numeric"
             maxLength={12}
             name={"phoneNumber"}
             placeholder="Phone number"
           />
           <FormField
             maxLength={255}
-            name={"gavelierClub"}
+            name={"gavelClub"}
             placeholder="Have gavel club?"
           />
           <FormField
             maxLength={255}
             name={"attendingWithChildren"}
-            placeholder="With children?"
+            placeholder="Will attend with children?"
           />
           <FormField
             maxLength={255}
-            name={"ChildsName"}
+            name={"childsName"}
             placeholder="Child's name(s)"
           />
           <FormField
@@ -173,7 +179,7 @@ function ListingEditScreen({ route }) {
           <FormField
             maxLength={255}
             name={"heardAboutFitness"}
-            placeholder="Heard about fitness?"
+            placeholder="How you heard about fitness"
           />
           <FormField
             maxLength={255}
