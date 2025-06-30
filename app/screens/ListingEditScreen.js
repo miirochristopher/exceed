@@ -13,6 +13,7 @@ import {
 
 import PickerItemType from "../components/PickerItemType";
 import Screen from "../components/Screen";
+import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required().min(3).label("Full name"),
@@ -22,7 +23,7 @@ const validationSchema = Yup.object().shape({
   attendingWithChildren: Yup.string()
     .required()
     .label("Will attend with children?"),
-  childsName: Yup.string().label("Child's or Children name(s)"),
+  childsName: Yup.string().label("Child's name(s) if attending"),
   age: Yup.number().min(1).label("Age"),
   activities: Yup.object().required().nullable().label("Activities"),
   dietaryRestrictions: Yup.string().label("Any dietary restrictions?"),
@@ -125,6 +126,7 @@ function ListingEditScreen({ route }) {
           validationSchema={validationSchema}
         >
           <TextInput
+            style={styles.textInput}
             maxLength={255}
             name={"event"}
             defaultValue={eventName}
@@ -154,7 +156,7 @@ function ListingEditScreen({ route }) {
           <FormField
             maxLength={255}
             name={"childsName"}
-            placeholder="Child's name(s)"
+            placeholder="Child's name(s) if attending"
           />
           <FormField
             keyboardType="numeric"
@@ -204,6 +206,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     paddingVertical: 15,
+  },
+  textInput: {
+    fontSize: 18,
+    padding: 15,
+    color: colors.charcoal,
   },
 });
 export default ListingEditScreen;
