@@ -3,16 +3,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AccountNavigator from "./AccountNavigator";
-import ListingEditScreen from "../screens/ListingEditScreen";
 import EventNavigator from "./EventNavigator";
 import NavButton from "./NavButton";
+import RegisterScreen from "../screens/RegisterScreen";
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
   <Tab.Navigator>
     <Tab.Screen
-      name="Lists"
+      name="Events"
       component={EventNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (
@@ -21,15 +21,15 @@ const AppNavigator = () => (
       }}
     />
     <Tab.Screen
-      name="Enroll"
-      component={ListingEditScreen}
+      name="Register"
+      component={RegisterScreen}
       options={({ navigation }) => ({
         tabBarButton: () => (
-          <NavButton onPress={() => navigation.navigate("Enroll")} />
+          <NavButton onPress={() => navigation.navigate("Register")} />
         ),
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons
-            name="calendar-clock"
+            name="plus-circle"
             color={color}
             size={size}
           />

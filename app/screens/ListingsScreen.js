@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import dayjs from "dayjs";
 
 import clubEventsAPI from "../rest/events";
+import useApi from "../hooks/useApi";
 
 import ActivityIndicator from "../components/ActivityIndicator";
 import Button from "../components/Button";
@@ -13,24 +14,16 @@ import Text from "../components/Text";
 import colors from "../config/colors";
 
 function ListingsScreen({ navigation }) {
-  const [events, setEvents] = useState([]);
-  const [errors, setErrors] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const {
+    data: events,
+    errors,
+    loading,
+    request: loadEvents,
+  } = useApi(clubEventsAPI.getClubEvents);
 
   useEffect(() => {
     loadEvents();
   }, []);
-
-  const loadEvents = async () => {
-    setLoading(true);
-    const response = await clubEventsAPI.getClubEvents();
-    setLoading(false);
-
-    if (!response.ok) return setErrors(true);
-
-    setErrors(false);
-    setEvents(response.data.data);
-  };
 
   return (
     <Screen>
