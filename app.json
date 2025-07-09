@@ -9,12 +9,12 @@
     "newArchEnabled": true,
     "splash": {
       "image": "./app/assets/background.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#373598"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.exceed"
+      "bundleIdentifier": "club.exceedtoastmasters"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,10 +22,11 @@
         "backgroundColor": "#E2E1E1"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.exceed"
+      "package": "club.exceedtoastmasters"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-secure-store"]
   }
 }

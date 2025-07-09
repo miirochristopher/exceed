@@ -1,7 +1,8 @@
 import { create } from "apisauce";
+import settings from "../config/settings";
 
 const client = create({
-  baseURL: "https://awesome-excellence-7515ffee03.strapiapp.com/api",
+  baseURL: settings.apiUrl,
 });
 
 export default client;

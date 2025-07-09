@@ -38,3 +38,10 @@ yarn-error.*
 
 #vscode
 .vscode
+
+# platfomrs
+android/ 
+ios/
+
+# keys
+*.keystore

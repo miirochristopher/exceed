@@ -5,6 +5,7 @@ import { ListItem, ListItemSeparator } from "../components/lists";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
 import Screen from "../components/Screen";
+import useAuth from "../auth/useAuth";
 
 const menuItems = [
   {
@@ -25,16 +26,18 @@ const menuItems = [
 ];
 
 function AccountScreen({ navigation }) {
+  const { user, logOut } = useAuth();
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
-          title="Default User"
-          subTitle="user@gmail.com"
+          title={user.username}
+          subTitle={user.email}
           image={require("../assets/male.png")}
         />
       </View>
-      <View style={styles.container}>
+
+      <View>
         <FlatList
           data={menuItems}
           keyExtractor={(menuItem) => menuItem.title}
@@ -54,19 +57,25 @@ function AccountScreen({ navigation }) {
         />
       </View>
       <ListItem
+        style={styles.logout}
         title="Logout"
         IconComponent={<Icon name="logout" backgroundColor="#ffa500" />}
+        onPress={() => logOut()}
       />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginVertical: 10,
+  },
+  logout: {
+    paddingVertical: 25,
+  },
   screen: {
     backgroundColor: colors.light,
-  },
-  container: {
-    marginVertical: 20,
   },
 });
 
