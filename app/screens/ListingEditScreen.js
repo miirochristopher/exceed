@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, TextInput } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import clubEventsAPI from "../rest/events";
@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
   attendingWithChildren: Yup.string()
     .required()
     .label("Will attend with children?"),
-  childsName: Yup.string().label("Child's or Children name(s)"),
+  childsName: Yup.string().label("Child's name(s) if attending"),
   age: Yup.number().min(1).label("Age"),
   activities: Yup.object().required().nullable().label("Activities"),
   dietaryRestrictions: Yup.string().label("Any dietary restrictions?"),
@@ -93,13 +93,14 @@ function ListingEditScreen({ route }) {
 
   const [eventName] = useState(enrollInto.name);
 
-  const handleSubmit = async (enrollment) => {
+  const handleSubmit = async (enrollment, { resetForm }) => {
     const result = await clubEventsAPI.createEnrollment(enrollment);
     if (!result.ok) {
       console.log(result.originalError.message);
       return alert("Could not save enrollment!");
     } else {
       alert("Enrollment was successful!");
+      resetForm();
     }
   };
 
@@ -124,7 +125,7 @@ function ListingEditScreen({ route }) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <TextInput
+          <FormField
             maxLength={255}
             name={"event"}
             defaultValue={eventName}
@@ -137,7 +138,7 @@ function ListingEditScreen({ route }) {
           />
           <FormField
             keyboardType="numeric"
-            maxLength={12}
+            maxLength={10}
             name={"phoneNumber"}
             placeholder="Phone number"
           />
@@ -154,7 +155,7 @@ function ListingEditScreen({ route }) {
           <FormField
             maxLength={255}
             name={"childsName"}
-            placeholder="Child's name(s)"
+            placeholder="Child's name(s) if attending"
           />
           <FormField
             keyboardType="numeric"

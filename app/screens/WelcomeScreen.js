@@ -15,12 +15,9 @@ function WelcomeScreen({ navigation }) {
         <Text style={styles.tagline}>Exceed Toastmasters Club</Text>
       </View>
       <View style={styles.buttonsContainer}>
+        <Button title="Login" onPress={() => navigation.push("Login")} />
         <Button
-          title="Become A Member"
-          onPress={() => navigation.push("Register")}
-        />
-        <Button
-          title="Continue As Guest"
+          title="Guest"
           color="secondary"
           onPress={() => navigation.push("Events")}
         />

@@ -1,33 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Image } from "react-native";
+import authAPI from "../rest/auth";
 import * as Yup from "yup";
 
+import useAuth from "../auth/useAuth";
 import Screen from "../components/Screen";
-import { Form, FormField, SubmitButton } from "../components/forms";
+import {
+  ErrorMessage,
+  Form,
+  FormField,
+  SubmitButton,
+} from "../components/forms";
+
+import Text from "../components/Text";
+import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  identifier: Yup.string().required().label("Email or Username"),
+  password: Yup.string().required().label("Password"),
 });
 
-function LoginScreen(props) {
+function LoginScreen({ navigation }) {
+  const auth = useAuth();
+  const [loginFailed, setLoginFailed] = useState(false);
+
+  const handleSubmit = async (user) => {
+    const result = await authAPI.login(user);
+    if (!result.ok) return setLoginFailed(true);
+    setLoginFailed(false);
+    auth.logIn(result.data.jwt, result.data.user);
+  };
+
   return (
     <Screen style={styles.container}>
       <Image style={styles.logo} source={require("../assets/logo.png")} />
 
+      <ErrorMessage
+        style={styles.error}
+        error={"Invalid username and/or password"}
+        visible={loginFailed}
+      />
+
       <Form
-        initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        initialValues={{ identifier: "", password: "" }}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         <FormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
-          keyboardType="email-address"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
+          name="identifier"
+          placeholder="Email or Username"
         />
         <FormField
           autoCapitalize="none"
@@ -40,6 +64,9 @@ function LoginScreen(props) {
         />
         <SubmitButton title="Login" />
       </Form>
+      <Text style={styles.link} onPress={() => navigation.navigate("Register")}>
+        Not registered? Signup
+      </Text>
     </Screen>
   );
 }
@@ -48,11 +75,20 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
   },
+  error: {
+    padding: 10,
+  },
+  link: {
+    color: colors.secondary,
+    paddingBottom: 15,
+    paddingLeft: "20%",
+    paddingTop: 10,
+  },
   logo: {
-    width: 80,
-    height: 80,
+    width: 250,
+    height: 250,
     alignSelf: "center",
-    marginTop: 50,
+    marginTop: 20,
     marginBottom: 20,
   },
 });
