@@ -8,7 +8,8 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import HomeScreen from "../screens/HomeScreen";
 import MeetingScreen from "../screens/MeetingScreen";
 import SocialsScreen from "../screens/SocialsScreen";
-import ContestsScreen from "../screens/Contests";
+import ContestsScreen from "../screens/ContestsScreen";
+import NewsletterScreen from "../screens/NewsletterScreen";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ const AuthNavigator = () => {
       <Stack.Screen name="Meeting" component={MeetingScreen} />
       <Stack.Screen name="Socials" component={SocialsScreen} />
       <Stack.Screen name="Contests" component={ContestsScreen} />
+      <Stack.Screen name="Newsletter" component={NewsletterScreen} />
     </Stack.Navigator>
   );
 };
