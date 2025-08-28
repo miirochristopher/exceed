@@ -19,7 +19,7 @@ function WelcomeScreen({ navigation }) {
         <Button
           title="Guest"
           color="secondary"
-          onPress={() => navigation.push("Events")}
+          onPress={() => navigation.push("Home")}
         />
       </View>
     </ImageBackground>
