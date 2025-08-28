@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import socialAPI from "../rest/socials";
+import contestsAPI from "../rest/contests";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
@@ -14,19 +14,16 @@ import AppText from "../components/Text";
 import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
-  attendee: Yup.string().required().label("Attendee"),
+  speaker: Yup.string().required().label("Speaker"),
   role: Yup.string().required().label("Role"),
-  children: Yup.string().required().label("Attending with children?"),
-  count: Yup.string().label("Number of children"),
-  ages: Yup.string().label("Ages of the children"),
   payment: Yup.string().required().label("Confirm Payment"),
 });
 
-function SocialsScreen() {
+function ContestsScreen() {
   const [attendanceFailed, setAttendanceFailed] = useState(false);
 
   const handleSubmit = async (delegate, { resetForm }) => {
-    const result = await socialAPI.attend(delegate);
+    const result = await contestsAPI.attend(delegate);
     if (!result.ok) {
       return setAttendanceFailed(true);
     } else {
@@ -40,14 +37,7 @@ function SocialsScreen() {
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <Screen style={styles.container}>
         <Form
-          initialValues={{
-            attendee: "",
-            role: "",
-            children: false,
-            count: "",
-            ages: "",
-            payment: "",
-          }}
+          initialValues={{ speaker: "", role: "", payment: "" }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
@@ -59,11 +49,11 @@ function SocialsScreen() {
           <FormField
             autoCorrect={false}
             icon="card-account-details"
-            name={"attendee"}
+            name={"speaker"}
             placeholder="Name; attending as?"
           />
           <AppText style={styles.small}>
-            A Guest, Member or Visiting Toast Master/Gavellian
+            A Contestant, Guest, Member or Visiting Toast Master, Others
           </AppText>
           <FormField
             autoCorrect={false}
@@ -71,30 +61,7 @@ function SocialsScreen() {
             name="role"
             placeholder="Role"
           />
-          <AppText style={styles.small}>
-            TMOD, Speaker, Evaluator, Timer, Grammarian, Ah counter, Table
-            Topics Master, General Evaluator, Other - specify
-          </AppText>
-          <FormField
-            autoCorrect={false}
-            icon={"card-account-details-star"}
-            name="children"
-            placeholder="Attending with children?"
-          />
-          <AppText style={styles.small}>Yes or No</AppText>
-          <FormField
-            autoCorrect={false}
-            icon={"card-account-details-star"}
-            name="count"
-            placeholder="If yes, how many?"
-          />
-          <FormField
-            autoCorrect={false}
-            icon={"card-account-details-star"}
-            name="ages"
-            placeholder="If yes, list their ages?"
-          />
-          <AppText style={styles.small}>Age 1, Age 2 etc..</AppText>
+          <AppText style={styles.small}>Contestant, Other - specify</AppText>
           <FormField
             autoCorrect={false}
             icon="credit-card-check"
@@ -125,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SocialsScreen;
+export default ContestsScreen;

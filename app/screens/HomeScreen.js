@@ -22,7 +22,7 @@ function HomeScreen({ navigation }) {
         <Button
           title="Speech Contests"
           color="secondary"
-          onPress={() => navigation.push("Events")}
+          onPress={() => navigation.push("Contests")}
         />
       </View>
     </SafeAreaView>
