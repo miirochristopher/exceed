@@ -24,6 +24,11 @@ function HomeScreen({ navigation }) {
           color="secondary"
           onPress={() => navigation.push("Contests")}
         />
+        <Button
+          title="Our Newsletter"
+          color="secondary"
+          onPress={() => navigation.push("Newsletter")}
+        />
       </View>
     </SafeAreaView>
   );
