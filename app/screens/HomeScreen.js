@@ -17,7 +17,7 @@ function HomeScreen({ navigation }) {
         <Button
           title="Social meetings"
           color="secondary"
-          onPress={() => navigation.push("Events")}
+          onPress={() => navigation.push("Socials")}
         />
         <Button
           title="Speech Contests"
