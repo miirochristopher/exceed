@@ -14,14 +14,7 @@ const menuItems = [
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
     },
-  },
-  {
-    title: "Messages",
-    icon: {
-      name: "email",
-      backgroundColor: colors.secondary,
-    },
-    targetScreen: "Messages",
+    targetScreen: "Enrollments",
   },
 ];
 
@@ -33,7 +26,7 @@ function AccountScreen({ navigation }) {
         <ListItem
           title={user.username}
           subTitle={user.email}
-          image={require("../assets/male.png")}
+          image={require("../assets/user.png")}
         />
       </View>
 
