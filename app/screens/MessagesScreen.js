@@ -13,14 +13,14 @@ const initialMessages = [
     id: 1,
     title: "Default User",
     description: "Hey! Is this item still available?",
-    image: require("../assets/male.png"),
+    image: require("../assets/user.png"),
   },
   {
     id: 2,
     title: "Other User",
     description:
       "I'm interested in this item. When will you be able to post it?",
-    image: require("../assets/male.png"),
+    image: require("../assets/user.png"),
   },
 ];
 
@@ -57,7 +57,7 @@ function MessagesScreen(props) {
               id: 2,
               title: "T2",
               description: "D2",
-              image: require("../assets/male.png"),
+              image: require("../assets/user.png"),
             },
           ]);
         }}
