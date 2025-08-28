@@ -24,7 +24,6 @@ function MeetingScreen() {
 
   const handleSubmit = async (delegate, { resetForm }) => {
     const result = await meetingAPI.attend(delegate);
-    console.log(result.data);
     if (!result.ok) {
       return setAttendanceFailed(true);
     } else {
@@ -62,8 +61,8 @@ function MeetingScreen() {
           placeholder="Role"
         />
         <AppText style={styles.small}>
-          ROLE: TMOD, Speaker, Evaluator, Timer, Grammarian, Ah counter, Table
-          Topics Master, General Evaluator, Other - specify
+          TMOD, Speaker, Evaluator, Timer, Grammarian, Ah counter, Table Topics
+          Master, General Evaluator, Other - specify
         </AppText>
         <FormField
           autoCorrect={false}
