@@ -1,12 +1,26 @@
 {
+  "cli": {
+    "version": ">= 3.0.0",
+    "promptToConfigurePushNotifications": false,
+    "appVersionSource": "remote"
+  },
   "build": {
+    "development": {
+      "environment": "development",
+      "autoIncrement": true,
+      "developmentClient": true,
+      "distribution": "internal"
+    },
     "preview": {
       "environment": "preview",
-      "env": {
-        "NODE_ENV": "preview"
-      },
+      "autoIncrement": true,
       "developmentClient": false,
       "distribution": "internal"
+    },
+    "production": {
+      "environment": "production",
+      "developmentClient": false,
+      "autoIncrement": true
     }
   }
 }
