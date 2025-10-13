@@ -1,0 +1,12 @@
+{
+  "build": {
+    "preview": {
+      "environment": "preview",
+      "env": {
+        "NODE_ENV": "preview"
+      },
+      "developmentClient": false,
+      "distribution": "internal"
+    }
+  }
+}

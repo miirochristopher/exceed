@@ -5,11 +5,16 @@ const settings = {
   production: {
     apiUrl: "https://exceedtoastmasters.club/api",
   },
+  preview: {
+    apiUrl: "http://exceedtoastmasters.club/api",
+  },
 };
 
 const getCurrentSettings = () => {
-  if (__DEV__) {
+  if (__DEV__ && process.env.NODE_ENV !== "preview") {
     return settings.development;
+  } else if (process.env.NODE_ENV === "preview") {
+    return settings.preview;
   } else {
     return settings.production;
   }

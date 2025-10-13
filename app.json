@@ -22,11 +22,27 @@
         "backgroundColor": "#E2E1E1"
       },
       "edgeToEdgeEnabled": true,
-      "package": "club.exceedtoastmasters"
+      "package": "com.exceedtoastmastersclub.exceed"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "plugins": ["expo-secure-store"]
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourceslnReleaseBuilds": true,
+            "useLegacyPackaging": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d338aeaa-7f6f-4fea-858b-41067e9d4b23"
+      }
+    }
   }
 }
