@@ -22,13 +22,16 @@ const validationSchema = Yup.object().shape({
 function RegisterScreen() {
   const [signupFailed, setSignupFailed] = useState(false);
 
-  const handleSubmit = async (user) => {
+  const handleSubmit = async (user, { resetForm }) => {
     const result = await regAPI.register(user);
     console.log(result.data);
-    if (!result.ok) return setSignupFailed(true);
+    if (!result.ok) {
+      return setSignupFailed(true);
+    } else {
+      alert("Successfully registered!");
+      resetForm();
+    }
     setSignupFailed(false);
-    console.log(result.data.user);
-    console.log(result.data.jwt);
   };
   return (
     <Screen style={styles.container}>
