@@ -1,5 +1,6 @@
-const getCurrentSettings = () => {
-  return process.env.EXPO_PUBLIC_API_URL;
+const settings = {
+  apiUrl:
+    process.env.EXPO_PUBLIC_API_URL || "https://exceedtoastmasters.club/api",
 };
 
-export default getCurrentSettings();
+export default settings;
